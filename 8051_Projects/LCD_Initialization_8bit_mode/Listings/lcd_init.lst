@@ -1,0 +1,105 @@
+C51 COMPILER V9.60.7.0   LCD_INIT                                                          08/06/2025 23:48:28 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE LCD_INIT
+OBJECT MODULE PLACED IN .\Objects\lcd_init.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE lcd_init.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -lcd_init.lst) TABS(2) OBJECT(.\Objects\lcd_init.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include <string.h>
+   3          #define data_pins P2
+   4          sbit rs = P3^0;
+   5          sbit en = P3^1;
+   6          //_Bool LED_BUILTIN @P3^3: 5 ; //TO WRITE OUTPUT
+   7          
+   8          void delay(unsigned int x);
+   9          void cmd(unsigned char a);
+  10          void lcd_init();
+  11          void print(unsigned char *s);
+  12          void str(unsigned char a);
+  13          
+  14          void delay(unsigned int x){
+  15   1        unsigned int i,j;
+  16   1        for(i=0;i<x;i++){
+  17   2          for (j=0;j<500;j++);
+  18   2        }
+  19   1      }
+  20          void cmd(unsigned char a){
+  21   1        rs=0;
+  22   1        data_pins = a;
+  23   1        en = 1;
+  24   1        delay(10);
+  25   1        en = 0;
+  26   1      }
+  27          void lcd_init(){
+  28   1        cmd(0x38);
+  29   1        cmd(0x0c);
+  30   1        cmd(0x01);
+  31   1        cmd(0x80);
+  32   1        //cmd(0x0f);
+  33   1      }
+  34          void print(unsigned char *s){
+  35   1          while(*s){
+  36   2            str(*s++);
+  37   2          }
+  38   1      }
+  39          /* void print(unsigned char *s){
+  40            unsigned int i,len;
+  41            len=strlen(s);
+  42            for(i=0;i<len;i++){
+  43              str(s[i]);
+  44            }
+  45          } 
+  46          */
+  47          void str(unsigned char b){
+  48   1        data_pins = b; //to send the data to the registers
+  49   1        rs = 1; // it is on data ragister
+  50   1        en = 1;  //execute the instruction 
+  51   1        delay(10);  //
+  52   1        en = 0; // after 1 we again make it 0
+  53   1      }
+  54          void main(){
+C51 COMPILER V9.60.7.0   LCD_INIT                                                          08/06/2025 23:48:28 PAGE 2   
+
+  55   1        lcd_init();
+  56   1        //cmd(0x80); // cursor to the bigining
+  57   1        //cmd(0x07);
+  58   1        print("  NEVER ");
+  59   1        cmd(0xc0); //force cursor to the 2 nd line
+  60   1        print("ENDING STORY");
+  61   1      
+  62   1      }
+  63          /*
+  64          Scroll(char *str) {
+  65              int i, len = 0;
+  66              char *ptr = str;
+  67          
+  68              // Calculate string length
+  69              while (*ptr++) len++;
+  70          
+  71              for (i = 0; i < len; i++) {
+  72                  cmd(0x80);  // Move to the first line
+  73                  print(&str[i]);  // Display substring
+  74                  print(" ");  // Add a space after the substring for smooth scrolling
+  75                  delay(300);    // Delay for visible scrolling
+  76                  cmd(0x01);  // Clear the display
+  77              }
+  78          }
+  79          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    141    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
