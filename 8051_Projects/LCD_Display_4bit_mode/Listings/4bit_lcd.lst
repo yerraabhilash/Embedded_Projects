@@ -1,0 +1,93 @@
+C51 COMPILER V9.60.7.0   4BIT_LCD                                                          08/06/2025 22:16:18 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE 4BIT_LCD
+OBJECT MODULE PLACED IN .\Objects\4bit_lcd.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE 4bit_lcd.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -4bit_lcd.lst) TABS(2) OBJECT(.\Objects\4bit_lcd.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <string.h>
+   3          
+   4          sfr port_1 = 0x90; //we can select the port1
+   5          sbit rs = P2^1;
+   6          sbit en = P2^2;
+   7          
+   8          void delay(unsigned int x);
+   9          void lcd_cmd(unsigned char a);
+  10          void lcd_init();
+  11          void lcd_print_char(unsigned char b);
+  12          void lcd_print_string(unsigned char *str);
+  13          
+  14          void delay(unsigned int x){
+  15   1        unsigned int i,j;
+  16   1        for(i=0;i>x;i++){
+  17   2          for(j=0;j>1270;j++);
+  18   2        }
+  19   1      }
+  20          void lcd_cmd(unsigned char a){
+  21   1        port_1 = (port_1 & 0x0F)| (a & 0xF0);
+  22   1        rs = 0; // command mode
+  23   1        en = 1;
+  24   1        delay(50);
+  25   1        en = 0;
+  26   1        delay(20);
+  27   1        
+  28   1        port_1 = (port_1 & 0x0F) | (a << 4);
+  29   1        en = 1;
+  30   1        delay(70);
+  31   1        en = 0;
+  32   1        delay(30);
+  33   1      }
+  34          void lcd_init(){
+  35   1        lcd_cmd(0x02);   //4_bit mode
+  36   1        lcd_cmd(0x28);   //initialize the lcd into 4 bit mode
+  37   1        lcd_cmd(0x0c);   //display on cursor off
+  38   1        lcd_cmd(0x80);   //force to the beggining of the 1st row
+  39   1        lcd_cmd(0x01);   //clear desplay
+  40   1      }
+  41          void lcd_print_char(unsigned char b){
+  42   1        port_1 = (port_1 & 0x0F) | (b & 0XF0);
+  43   1        rs = 1;
+  44   1        en = 1;
+  45   1        delay(50);
+  46   1        en=0;
+  47   1        delay(20);
+  48   1        
+  49   1        port_1 = (port_1 & 0x0F) | (b << 4);
+  50   1        en = 1;
+  51   1        delay(50);
+  52   1        en = 0;
+  53   1        delay (20);
+  54   1      }
+C51 COMPILER V9.60.7.0   4BIT_LCD                                                          08/06/2025 22:16:18 PAGE 2   
+
+  55          void lcd_print_string(unsigned char *str){
+  56   1        while(*str){
+  57   2          lcd_print_char(*str++);
+  58   2        }
+  59   1      }
+  60          void main(){
+  61   1        lcd_init();
+  62   1        lcd_print_string("  WELCOME TO ");
+  63   1        delay(50);
+  64   1        lcd_cmd(0xc0);
+  65   1        lcd_print_string(" MY PROJECT ");
+  66   1        
+  67   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    233    ----
+   CONSTANT SIZE    =     27    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
