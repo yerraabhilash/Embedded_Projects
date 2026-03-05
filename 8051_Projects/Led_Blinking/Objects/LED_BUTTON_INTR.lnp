@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\LED_BLINK_EXT.obj" 
+TO ".\Objects\LED_BUTTON_INTR" 
+PRINT(".\Listings\LED_BUTTON_INTR.m51")
