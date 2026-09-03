@@ -1,0 +1,5 @@
+"./Src/Lcd_display.o"
+"./Src/syscalls.o"
+"./Src/sysmem.o"
+"./Startup/startup_stm32f411ceux.o"
+"./drivers/Src/stm32f411cexx_gpio_driver.o"

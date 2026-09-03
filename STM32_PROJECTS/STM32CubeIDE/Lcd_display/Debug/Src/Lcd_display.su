@@ -1,0 +1,12 @@
+../Src/Lcd_display.c:30:13:mdelay	24	static
+../Src/Lcd_display.c:35:13:udelay	24	static
+../Src/Lcd_display.c:44:6:LCD_Set_Bit	16	static
+../Src/Lcd_display.c:72:6:Lcd_Cmd	16	static
+../Src/Lcd_display.c:85:6:GPIO_Init_Config	24	static
+../Src/Lcd_display.c:125:6:LCD_Init	8	static
+../Src/Lcd_display.c:152:6:Lcd_Enable	8	static
+../Src/Lcd_display.c:160:6:Lcd_Clear	8	static
+../Src/Lcd_display.c:167:6:Lcd_Set_Cursor	16	static
+../Src/Lcd_display.c:180:6:Lcd_Print_Char	24	static
+../Src/Lcd_display.c:194:6:Lcd_Print_String	24	static
+../Src/Lcd_display.c:204:5:main	8	static
