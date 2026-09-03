@@ -1,0 +1,6 @@
+../Src/008_spi_rx_tx_aurduino.c:58:6:delay	2
+../Src/008_spi_rx_tx_aurduino.c:64:6:SPI2_GPIOInits	1
+../Src/008_spi_rx_tx_aurduino.c:96:6:SPI2_Inits	1
+../Src/008_spi_rx_tx_aurduino.c:112:6:GPIO_ButtonInit	1
+../Src/008_spi_rx_tx_aurduino.c:133:9:SPI_VerifyResponse	2
+../Src/008_spi_rx_tx_aurduino.c:145:5:main	4
